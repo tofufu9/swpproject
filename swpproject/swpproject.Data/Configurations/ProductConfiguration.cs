@@ -1,0 +1,31 @@
+﻿using swpproject.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace swpproject.Data.Configurations
+{
+    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    {
+        public void Configure(EntityTypeBuilder<Product> builder)
+        {
+            builder.ToTable("Products");
+
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).UseIdentityColumn();
+
+            // Is Required này khi config sẽ NOTNULL
+            builder.Property(x => x.Price).IsRequired();
+
+            builder.Property(x => x.OriginalPrice).IsRequired();
+
+            builder.Property(x => x.Stock).IsRequired().HasDefaultValue(0);     // Mặc định cho trường Stock này có giá trị 0
+
+            builder.Property(x => x.ViewCount).IsRequired().HasDefaultValue(0);
+
+
+        }
+    }
+}
